@@ -1,6 +1,6 @@
 /*
  * version 0.04
- * 
+ * v 0.05 - github setup
  * v 0.04 - added hp, color change to bricks
  * v 0.03 - created drag controls vs. tap controls
  * v 0.02 - bricks visibility randomized 

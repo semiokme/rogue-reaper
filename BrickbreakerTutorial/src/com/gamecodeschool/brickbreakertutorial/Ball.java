@@ -10,7 +10,7 @@ public class Ball {
 	float yVelocity;
 	float ballWidth = 10;
 	float ballHeight = 10;
-	int attack = 2;
+	int attack = 1;
 	
 	public Ball(int screenX, int screenY){
 		

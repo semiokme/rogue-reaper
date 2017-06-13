@@ -1,22 +1,29 @@
 package com.gamecodeschool.brickbreakertutorial;
 
+import java.util.Random;
 import android.graphics.RectF;
 import android.graphics.Color;
+import android.widget.*;
 
 public class Brick {
 
 	private RectF rect;
 	private boolean isVisible;
 	private int hitPoints;
+	private int expPoints;
 	private int color;
 	
 	public Brick(int row, int column, int width, int height){
 		isVisible = true;
 		
+		Random r = new Random();
+		
 		int padding = 1;
 		
-		hitPoints = 3;
-		color = Color.YELLOW;
+		hitPoints = r.nextInt(4);
+		expPoints = (1+r.nextInt(4)) * hitPoints;
+		setColor();
+		//color = Color.YELLOW;
 
 		rect = new RectF(column * width + padding,
 				row * height + padding,
@@ -48,6 +55,8 @@ public class Brick {
 	
 	// changes color based on hitPoints value
 	private void setColor(){
+		if(hitPoints == 3)
+			color = Color.YELLOW;
 		if(hitPoints == 2)
 			color = Color.BLACK;
 		if(hitPoints == 1)
@@ -62,4 +71,7 @@ public class Brick {
 		setColor();
 	}
 	
+	public int getExp(){
+		return expPoints;
+	}
 }

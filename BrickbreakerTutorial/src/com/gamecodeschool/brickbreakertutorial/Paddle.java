@@ -53,12 +53,14 @@ public class Paddle {
 	
 	// called from update in BreakoutView
 	// determines if the paddle needs to move and changes coords in rect
-	public void update(long fps) {
+	public void update(long fps, int screenX) {
 		if(paddleMoving == LEFT) {
-			x = x - paddleSpeed / fps;
+			if(x >= 0)
+				x = x - paddleSpeed / fps;
 		}
 		
 		if(paddleMoving == RIGHT) {
+			if(x <= screenX - length)
 			x = x + paddleSpeed / fps;
 		}
 		

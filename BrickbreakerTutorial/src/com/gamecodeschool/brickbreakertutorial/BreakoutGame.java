@@ -1,5 +1,6 @@
 /*
- * version 0.04
+ * version 0.06
+ * v 0.06 - paddle offscreen bug fixed
  * v 0.05 - github setup
  * v 0.04 - added hp, color change to bricks
  * v 0.03 - created drag controls vs. tap controls
@@ -108,6 +109,9 @@ public class BreakoutGame extends Activity {
 		
 		// the score
 		int score = 0;
+		
+		// exp
+		int expPoints = 0;
 		
 		// lives
 		int lives = 3;
@@ -236,7 +240,7 @@ public class BreakoutGame extends Activity {
     public void update() {
     	
     	// move the paddle if required
-    	paddle.update(fps);
+    	paddle.update(fps, screenX);
     	
     	//move ball
     	ball.update(fps);
@@ -252,6 +256,7 @@ public class BreakoutGame extends Activity {
     				{
     					soundPool.play(explodeID, 1, 1, 0, 0, 1);
     					score = score+10;
+						expPoints = expPoints + bricks[i].getExp();
     				}
     				ball.reverseYVelocity();
     				//ball.clearObstacleY(bricks[i].getRect().top - 12);
@@ -352,7 +357,7 @@ public class BreakoutGame extends Activity {
     		//Draw the score
     		paint.setTextSize(40);
     		canvas.drawText("Score: " + score + "   Lives: " + lives, 10, 50, paint);
-    		
+    		canvas.drawText("Experience: " + expPoints, 10, 90, paint);
     		// Has the player cleared the screen?
     		if(score == numBricks * 10){
     			paint.setTextSize(90);

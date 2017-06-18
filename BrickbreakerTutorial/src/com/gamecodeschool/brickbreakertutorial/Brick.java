@@ -7,11 +7,11 @@ import android.widget.*;
 
 public class Brick {
 
-	private RectF rect;
-	private boolean isVisible;
-	private int hitPoints;
-	private int expPoints;
-	private int color;
+	protected RectF rect;
+	protected boolean isVisible;
+	protected int hitPoints;
+	protected int expPoints;
+	protected int color;
 	
 	public Brick(int row, int column, int width, int height){
 		isVisible = true;
@@ -54,7 +54,7 @@ public class Brick {
 	}
 	
 	// changes color based on hitPoints value
-	private void setColor(){
+	protected void setColor(){
 		if(hitPoints == 3)
 			color = Color.YELLOW;
 		if(hitPoints == 2)

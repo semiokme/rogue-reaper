@@ -6,6 +6,7 @@ import android.graphics.RectF;
 
 public class Ball {
 	RectF rect;
+	RectF prev;
 	float xVelocity;
 	float yVelocity;
 	float ballWidth = 10;
@@ -29,6 +30,7 @@ public class Ball {
 	}
 	
 	public void update(long fps){
+		prev = new RectF(rect);
 		rect.left = rect.left + (xVelocity / fps);
 		rect.top = rect.top + (yVelocity / fps);
 		rect.right = rect.left + ballWidth;
@@ -45,10 +47,19 @@ public class Ball {
 	
 	public void setRandomXVelocity(){
 		Random generator = new Random();
-		int answer = generator.nextInt(2);
+		int answer = generator.nextInt(10);
 		
 		if(answer == 0){
 			reverseXVelocity();
+		}
+		if(answer > 0 && answer <= 2){
+			xVelocity =  xVelocity - 40;
+		}
+		if(answer > 2 && answer <= 7){
+			xVelocity++;
+		}
+		if(answer > 7 && answer <= 9){
+			xVelocity = xVelocity +50;
 		}
 	}
 	
@@ -71,6 +82,31 @@ public class Ball {
 	
 	public int getAttack(){
 		return attack;
+	}
+	public RectF getPrev(){
+		return prev;
+	}
+	
+	// did the ball hit the rivht sidr of the brick
+	public boolean hitRight(RectF brick){
+		return (brick.right < prev.left) &&
+		(brick.right >= rect.left);
+		
+	}
+	public boolean hitLeft(RectF brick){
+		return (brick.left > prev.right) &&
+			(brick.left <= rect.right);
+
+	}
+	public boolean hitBottom(RectF brick){
+		return (brick.bottom < prev.top) &&
+			(brick.bottom >= rect.top);
+
+	}
+	public boolean hitTop(RectF brick){
+		return (brick.top > prev.bottom) &&
+			(brick.top <= rect.bottom);
+
 	}
 
 }

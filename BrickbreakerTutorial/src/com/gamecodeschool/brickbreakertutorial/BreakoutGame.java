@@ -71,6 +71,7 @@ public class BreakoutGame extends Activity {
 		
 		// Paused to start
 		boolean paused = true;
+		boolean anyVis = false;
 		
 		// canvas and paint objects
 		Canvas canvas;
@@ -98,6 +99,10 @@ public class BreakoutGame extends Activity {
 		// Up to 200 bricks
 		Brick[] bricks = new Brick[200];
 		int numBricks = 0;
+		
+		// Up to 50 monsters
+		Monster[] monsters = new Monster[50];
+		int numMonsters = 0;
 		
 		// For sound FX
 		SoundPool soundPool;
@@ -202,12 +207,21 @@ public class BreakoutGame extends Activity {
 				}
 			}
 			
-			// reset score and lives
-		if(lives == 0) {
-			score = 0;
-			lives = 3;
-		}
-		
+			// monster stats
+			int monWidth = screenX / 16;
+			int monHeight = screenY / 20;
+			numMonsters = 0;
+			
+			// generate monsters
+			for(int column = 0; column < 8; column++) {
+				for(int row = 0; row < 3; row++){
+					monsters[numMonsters] = new Monster(row,column,monWidth,monHeight);
+					if(generator.nextInt(2) == 0)
+						monsters[numMonsters].setInvisible();
+					numMonsters++;
+				}
+			}
+			
 		}
 		
 		@Override
@@ -258,7 +272,16 @@ public class BreakoutGame extends Activity {
     					score = score+10;
 						expPoints = expPoints + bricks[i].getExp();
     				}
-    				ball.reverseYVelocity();
+					if(ball.hitRight(bricks[i].getRect()) ||
+						ball.hitLeft(bricks[i].getRect())){
+							ball.reverseXVelocity();
+						}
+						
+					if(ball.hitTop(bricks[i].getRect()) ||
+					   ball.hitBottom(bricks[i].getRect())){
+						ball.reverseYVelocity();
+					}
+					
     				//ball.clearObstacleY(bricks[i].getRect().top - 12);
     				
     				
@@ -311,7 +334,7 @@ public class BreakoutGame extends Activity {
     	}
     	
     	// Pause if cleared screen
-    	if(score == numBricks * 10){
+    	if(anyVis == false){
     		paused = true;
     		createBricksAndRestart();
     	}
@@ -343,12 +366,14 @@ public class BreakoutGame extends Activity {
     		// change the brush color to brick
     		// paint.setColor(Color.argb(255, 249, 129, 0));
             // Draw the bricks
+			anyVis = false;
     		for(int i = 0; i < numBricks; i++){
     			if(bricks[i].getVisibility()) {
     				// change paint color to the color of the current brick, then draw it
     				paint.setColor(bricks[i].getColor());
     				canvas.drawRect(bricks[i].getRect(), paint);
-    			}
+    				anyVis = true;
+				}
     		}
             // Draw the HUD
     		// change brush color
@@ -359,7 +384,7 @@ public class BreakoutGame extends Activity {
     		canvas.drawText("Score: " + score + "   Lives: " + lives, 10, 50, paint);
     		canvas.drawText("Experience: " + expPoints, 10, 90, paint);
     		// Has the player cleared the screen?
-    		if(score == numBricks * 10){
+    		if(anyVis == false){
     			paint.setTextSize(90);
     			canvas.drawText("YOU HAVE WON!", 10, screenY/2, paint);
     		}
@@ -429,7 +454,12 @@ public class BreakoutGame extends Activity {
     	switch (motionEvent.getAction() & motionEvent.ACTION_MASK) {
     	
     	case MotionEvent.ACTION_DOWN:
-    		paused = false;
+				// reset score and lives
+				if(lives == 0) {
+					score = 0;
+					lives = 3;
+				}
+				paused = false;
     		prevX = motionEvent.getX();
     		break;
     		

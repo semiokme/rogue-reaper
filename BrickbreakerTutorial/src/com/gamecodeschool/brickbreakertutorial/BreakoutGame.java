@@ -1,5 +1,6 @@
 /*
- * version 0.06
+ * version 0.07
+ * v 0.07 - basics of monsters implemented
  * v 0.06 - paddle offscreen bug fixed
  * v 0.05 - github setup
  * v 0.04 - added hp, color change to bricks
@@ -259,6 +260,11 @@ public class BreakoutGame extends Activity {
     	//move ball
     	ball.update(fps);
     	
+		//move monsters
+		for(int i = 0; i < numMonsters; i++){
+			monsters[i].update(fps);
+		}
+		
     	// check collisions
     	//ball v brick
     	for(int i = 0; i < numBricks; i++){
@@ -288,7 +294,37 @@ public class BreakoutGame extends Activity {
     			}
     		}
     	}
-    	
+    	//ball v monster
+		for(int i = 0; i < numMonsters; i++){
+    		if(monsters[i].getVisibility()){
+    			if(RectF.intersects(monsters[i].getRect(), ball.getRect())){
+    				
+    				monsters[i].lowerHitPoints(ball.getAttack());
+    				if(!monsters[i].getVisibility())
+    				{
+    					soundPool.play(explodeID, 1, 1, 0, 0, 1);
+    					score = score+10;
+						expPoints = expPoints + bricks[i].getExp();
+    				}
+					if(ball.hitRight(monsters[i].getRect()) ||
+					   ball.hitLeft(monsters[i].getRect())){
+						ball.reverseXVelocity();
+					}
+
+					if(ball.hitTop(monsters[i].getRect()) ||
+					   ball.hitBottom(monsters[i].getRect())){
+						ball.reverseYVelocity();
+					}
+
+    				//ball.clearObstacleY(bricks[i].getRect().top - 12);
+
+
+    			}
+    		}
+    	}
+		//note  i need to make a collidables class
+		
+		
     	//ball v paddle
     	if(RectF.intersects(paddle.getRect(), ball.getRect())){
     		ball.setRandomXVelocity();
@@ -372,6 +408,16 @@ public class BreakoutGame extends Activity {
     				// change paint color to the color of the current brick, then draw it
     				paint.setColor(bricks[i].getColor());
     				canvas.drawRect(bricks[i].getRect(), paint);
+    				anyVis = true;
+				}
+    		}
+			
+			//draw monsters
+			for(int i = 0; i < numMonsters; i++){
+    			if(monsters[i].getVisibility()) {
+    				// change paint color to the color of the current brick, then draw it
+    				paint.setColor(monsters[i].getColor());
+    				canvas.drawRect(monsters[i].getRect(), paint);
     				anyVis = true;
 				}
     		}

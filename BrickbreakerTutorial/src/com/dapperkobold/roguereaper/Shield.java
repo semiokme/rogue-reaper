@@ -1,4 +1,4 @@
-package com.gamecodeschool.brickbreakertutorial;
+package com.dapperkobold.roguereaper;
 import android.graphics.RectF;
 // paddle type that is a shield
 // should be widrr and curved so bounces oddly

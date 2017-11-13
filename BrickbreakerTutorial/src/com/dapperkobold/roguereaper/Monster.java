@@ -1,4 +1,4 @@
-package com.gamecodeschool.brickbreakertutorial;
+package com.dapperkobold.roguereaper;
 
 import android.graphics.*;
 import java.util.*;

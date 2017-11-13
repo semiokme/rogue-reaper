@@ -1,5 +1,6 @@
 /*
- * version 0.07
+ * version 0.08
+ * v 0.08 - made PVector and Collidible
  * v 0.07 - basics of monsters implemented
  * v 0.06 - paddle offscreen bug fixed
  * v 0.05 - github setup
@@ -8,7 +9,7 @@
  * v 0.02 - bricks visibility randomized 
  * v 0.01 - runs, basics
  */
-package com.gamecodeschool.brickbreakertutorial;
+package com.dapperkobold.roguereaper;
 import java.io.IOException;
 import java.util.Random;
 

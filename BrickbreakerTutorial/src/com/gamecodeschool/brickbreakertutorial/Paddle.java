@@ -3,18 +3,18 @@ import android.graphics.RectF;
 
 public class Paddle {
 	//RectF is an object that holds 4 coordinates
-	private RectF rect;
+	protected RectF rect;
 	
 	// length and height
-	private float length;
-	private float height;
+	protected float length;
+	protected float height;
 	
 	// far left is x, top is y
-	private float x;
-	private float y;
+	protected float x;
+	protected float y;
 	
 	// holds pixels/sec speed
-	private float paddleSpeed;
+	protected float paddleSpeed;
 	
 	// which ways can the paddle move?
 	public final int STOPPED = 0;
@@ -22,7 +22,7 @@ public class Paddle {
 	public final int RIGHT = 2;
 	
 	// is it moving and which way?
-	private int paddleMoving = STOPPED;
+	protected int paddleMoving = STOPPED;
 	
 	// constructor, takes width and height as args
 	public Paddle(int screenX, int screenY) {

@@ -265,6 +265,9 @@ public class BreakoutGame extends Activity {
 			monsters[i].update(fps);
 		}
 		
+	
+		
+		
     	// check collisions
     	//ball v brick
     	for(int i = 0; i < numBricks; i++){

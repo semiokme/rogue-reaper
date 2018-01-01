@@ -12,6 +12,9 @@ public class Brick {
 	protected int hitPoints;
 	protected int expPoints;
 	protected int color;
+	protected int souls;
+
+	
 	
 	public Brick(int row, int column, int width, int height){
 		isVisible = true;
@@ -22,6 +25,8 @@ public class Brick {
 		
 		hitPoints = r.nextInt(4);
 		expPoints = (1+r.nextInt(4)) * hitPoints;
+		souls = 2;
+		
 		setColor();
 		//color = Color.YELLOW;
 
@@ -73,5 +78,9 @@ public class Brick {
 	
 	public int getExp(){
 		return expPoints;
+	}
+	
+	public int getSouls() {
+		return souls;
 	}
 }

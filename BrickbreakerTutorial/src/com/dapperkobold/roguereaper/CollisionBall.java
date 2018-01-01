@@ -1,23 +1,28 @@
+// new ball class will eventually extend collidibles.  First needs to work with Vectors.  
+
 package com.dapperkobold.roguereaper;
 
 import java.util.Random;
 
 import android.graphics.RectF;
 
-public class Ball {
+public class CollisionBall {
 	RectF rect;
 	RectF prev;
-	float xVelocity;
-	float yVelocity;
+	float xVelocity; // dep
+	float yVelocity; // dep
 	float ballWidth = 10;
 	float ballHeight = 10;
 	int attack = 1;
+	PVector position = new PVector(0,0);
+	PVector velocity = new PVector(0,0);
 	
-	public Ball(int screenX, int screenY){
+	public CollisionBall(int screenX, int screenY){
 		
 		//Star the ball moving upwards @ 100px/s
-		xVelocity = 200;
-		yVelocity = -400;
+		//xVelocity = 200;
+		//yVelocity = -400;
+		
 		
 		//place the ball in the center of the screen at bottom
 		// Make it 10px by 10px square
@@ -30,19 +35,26 @@ public class Ball {
 	}
 	
 	public void update(long fps){
+		// takes current rect, moves into prev, and updates current.
 		prev = new RectF(rect);
-		rect.left = rect.left + (xVelocity / fps);
+/*		rect.left = rect.left + (xVelocity / fps);
 		rect.top = rect.top + (yVelocity / fps);
 		rect.right = rect.left + ballWidth;
-		rect.bottom = rect.top - ballHeight;
+		rect.bottom = rect.top - ballHeight; */
+
+		// I think this should move the ball based on the velocity vector.  
+		rect.offset((velocity.getX()/fps), (velocity.getY()/fps));
+
 	}
 	
 	public void reverseYVelocity(){
-		yVelocity = -yVelocity;
+//		yVelocity = -yVelocity;
+		velocity.setY(-velocity.getY());
 	}
 	
 	public void reverseXVelocity(){
-		xVelocity = -xVelocity;
+//		xVelocity = -xVelocity;
+		velocity.setX(-velocity.getX());
 	}
 	
 	public void setRandomXVelocity(){
@@ -74,11 +86,30 @@ public class Ball {
 	}
 	
 	public void reset(int x, int y){
+		// rect is legacy, still using for collision
 		rect.left = x / 2;
 		rect.top = y- 20;
 		rect.right = x / 2 + ballWidth;
 		rect.bottom = y - 20 - ballHeight;
+	//NOTE: COULD RECT.CENTER methods build position vector or vice-versa?
+		
+		// velocity is hard coded starting velocity
+		// position is mid screen, 20 px up.  
+		velocity.setX(200);
+		velocity.setY(-400);
+		position.setX(x/2);
+		position.setY(y-20);
+		
 	}
+	
+	/* This whole thing doesn't work, need to read more and draw up a better outline plan.  
+	public void OnCollision(PVector n) {
+		// use the normal of the thing that was hit to determine the new velocity vector of the ball
+		velocity = velocity - 2 * PVector.mult(n, velocity);
+	}
+	/*As far as the actual math is concerned, if you need the normal of two vectors
+	 * , calculate a cross product, if you need the normal of one 2D vector, use a negative reciprocal */
+	
 	
 	public int getAttack(){
 		return attack;
@@ -87,7 +118,7 @@ public class Ball {
 		return prev;
 	}
 	
-	// did the ball hit the rivht sidr of the brick
+	// did the ball hit the right side of the brick
 	public boolean hitRight(RectF brick){
 		return (brick.right < prev.left) &&
 		(brick.right >= rect.left);
@@ -109,18 +140,4 @@ public class Ball {
 
 	}
 
-	public float getXVelocity() {
-		return xVelocity;
-	}
-	public float getYVelocity() {
-		return yVelocity;
-	}
-	
-	public void setXVelocity(float v) {
-		xVelocity = v;
-	}
-	
-	public void setYVelocity(float v) {
-		yVelocity = v;
-	}
 }

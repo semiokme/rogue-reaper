@@ -1,3 +1,52 @@
-boss fights
+Time log - 2018
+1/1 - 
+
+=-0boss fights=\\]
 endless,story,randomized stages
 
+Startup currently loads the sharedprefs (and makes the dummy if it doesn't exist).  It then launches the game via a button
+TODO:
+-Fix the layout to include all the data and be useful
+-Pass the data between activities (this might involve stringifying/serializing/GSONing objects, which is yet more axe sharpening
+-When you win or die, pass data BACK and such.  
+
+
+
+Collidible will be used in a tree where all objects that can collide are some type of collidible.  
+It will provide methods for collision detection
+
+I need to be able to handle the following types of collisions:
+
+Circle - Circle
+Circle - Rect
+Rect - Rect
+
+I need a general angle of reflection formula
+https://stackoverflow.com/questions/573084/how-to-calculate-bounce-angle
+
+so
+velocity v is the ball's velocity
+normal n is the wall's normal (perpendicular to the flat side collided with)
+split v into components u (same vector as the normal) and w (same vector as the side collided with)
+u = ( v dotprod n ) * n
+w = v - u
+post collision velocity then is = w - u (no friction or w/e)
+
+so what does this tell me?  I need to figure out how to know the lines that make up the edges of things.  
+so in my example, the ball have a velocity v
+the box has a side s, and a normal n
+-87
+
+
+so how do we find normals?
+
+if we define dx=x2-x1 and dy=y2-y1, then the normals are (-dy, dx) and (dy, -dx).
+positions vectors can be defined as a line from the origin (upper left) to the position.  
+so that means poision vectors in this formula are dx = p.x-0 and dy = p.y-0, meaning vector position = (dx,dy)
+so then the normals are (-dy, dx) and (dy, -dx) then that means for position p, the normal n is (-p.y,p.x) or (p.y,-p.x)
+we can determine which side of the line we're hitting, and that tells us which normal to use
+
+0
+
+
+.=00

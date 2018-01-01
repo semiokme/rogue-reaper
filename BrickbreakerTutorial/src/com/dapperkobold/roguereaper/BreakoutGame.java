@@ -96,7 +96,8 @@ public class BreakoutGame extends Activity {
 		Paddle paddle;
 		
 		// A ball
-		Ball ball;
+//		Ball ball;
+		CollisionBall ball;
 		
 		// Up to 200 bricks
 		Brick[] bricks = new Brick[200];
@@ -122,6 +123,9 @@ public class BreakoutGame extends Activity {
 		
 		// lives
 		int lives = 3;
+		
+		// Player object data
+		Player player = new Player();
 		
 		// on init of gameView, this special constructor runs
 		public BreakoutView(Context context) {
@@ -150,7 +154,7 @@ public class BreakoutGame extends Activity {
 			paddle = new Paddle(screenX, screenY);
 			
 			// create ball
-			ball = new Ball(screenX, screenY);
+			ball = new CollisionBall(screenX, screenY);
 			
 			//Load sounds
 			// This SoundPool is deprecated but don't worry
@@ -279,7 +283,9 @@ public class BreakoutGame extends Activity {
     				if(!bricks[i].getVisibility())
     				{
     					soundPool.play(explodeID, 1, 1, 0, 0, 1);
-    					score = score+10;
+    					score = score+ bricks[i].getSouls();
+    					if(player.pJob.twoForOne())
+    						score = score + bricks[i].getSouls();
 						expPoints = expPoints + bricks[i].getExp();
     				}
 					if(ball.hitRight(bricks[i].getRect()) ||
@@ -331,7 +337,7 @@ public class BreakoutGame extends Activity {
 		
     	//ball v paddle
     	if(RectF.intersects(paddle.getRect(), ball.getRect())){
-    		ball.setRandomXVelocity();
+    		//ball.setRandomXVelocity(); // temp change to get vectors a little working
     		ball.reverseYVelocity();
     		ball.clearObstacleY(paddle.getRect().top - 2);
     		soundPool.play(beep1ID, 1, 1, 0, 0, 1);

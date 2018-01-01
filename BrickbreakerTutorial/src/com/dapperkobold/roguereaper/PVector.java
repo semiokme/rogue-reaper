@@ -68,6 +68,32 @@ public class PVector {
 		return new PVector(v.getX() / n, v.getY() / n);
 	}
 	
+	// static dot product
+	public static float dotprod(PVector a, PVector b) {
+		return ((a.getX() * b.getX()) + (a.getY() * b.getY()));
+	}
+	
+	//returns a normalized vector that is the normal of the calling vector
+	public PVector normalY(PVector v) {
+		PVector n = new PVector(v);
+		float dx = n.getX();
+		float dy = n.getY();
+		n.setX(-dy);
+		n.setY(dx);
+		n.normalize();
+		return n;
+	}
+
+	//returns a normalized vector that is the normal of the calling vector
+	public PVector normalX(PVector v) {
+		PVector n = new PVector(v);
+		float dx = n.getX();
+		float dy = n.getY();
+		n.setX(dy);
+		n.setY(-dx);
+		n.normalize();
+		return n;
+	}
 	
 	// returns vector magnitude - no modification 
 	public float mag() {

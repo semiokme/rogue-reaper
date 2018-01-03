@@ -62,7 +62,7 @@ public class StartUp extends Activity {
 			@Override
 			public void onClick(View v) {
 				 Intent intent = new Intent(StartUp.this, BreakoutGame.class);
-	                startActivity(intent);
+	                StartUp.this.startActivity(intent);
 	                //snagged this from S.O.  there is a bit about passing variables in- probably better than re-accessing preferences
 	                //https://stackoverflow.com/questions/4186021/how-to-start-new-activity-on-button-click
 	                finish();

@@ -218,6 +218,7 @@ public class BreakoutGame extends Activity {
 			int monHeight = screenY / 20;
 			numMonsters = 0;
 			
+			/*
 			// generate monsters
 			for(int column = 0; column < 8; column++) {
 				for(int row = 0; row < 3; row++){
@@ -226,6 +227,14 @@ public class BreakoutGame extends Activity {
 						monsters[numMonsters].setInvisible();
 					numMonsters++;
 				}
+			}
+			*/
+			
+			//new generate monsters
+			numMonsters = generator.nextInt(20);
+			numMonsters += player.pJob.hunter(numMonsters);
+			for(int i = 0; i < numMonsters; i++){
+				monsters[i] = new Monster(generator.nextInt(3),generator.nextInt(8),monWidth,monHeight);
 			}
 			
 		}

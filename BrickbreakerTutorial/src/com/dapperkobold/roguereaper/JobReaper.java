@@ -22,14 +22,14 @@ public class JobReaper extends Job {
 	//constructor
 	public JobReaper(String n, int l, int[] a) {
 		super(n,l,a);
-		twoFor = abilities[1]*5;
-		hunter = abilities[2]*0.05f;
-		lastGasp = abilities[3]*2.5f;
-		ghostly = abilities[4];
+		twoFor = abilities[0]*5;
+		hunter = abilities[1]*0.05f;
+		lastGasp = abilities[2]*2.5f;
+		ghostly = abilities[3];
 		hollowBrick = new Brick(-1,-1,-1,-1);
 		resetGhost();
-		reaping = abilities[5];
-		ltd = abilities[6];
+		reaping = abilities[4];
+		ltd = abilities[5];
 	}
 
 

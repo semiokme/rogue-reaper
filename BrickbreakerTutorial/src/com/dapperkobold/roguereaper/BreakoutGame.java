@@ -322,7 +322,9 @@ public class BreakoutGame extends Activity {
     				if(!monsters[i].getVisibility())
     				{
     					soundPool.play(explodeID, 1, 1, 0, 0, 1);
-    					score = score+10;
+    					score = score+monsters[i].getSouls();
+    					if(player.pJob.twoForOne())
+    						score = score+monsters[i].getSouls();
 						expPoints = expPoints + bricks[i].getExp();
     				}
 					if(ball.hitRight(monsters[i].getRect()) ||
